@@ -15,44 +15,33 @@ namespace GradeBook.GradeBooks
 
         public override char GetLetterGrade(double averageGrade)
         {
-            if(Students.Count > 5)
+            if (Students.Count > 5)
             {
-                // Get the average grades for the students in a list order decending
-                var averageGrades = Students.OrderByDescending(e => e.AverageGrade).Select(e => e.AverageGrade).ToList();
-
-                // Top 20 % - Round averageGrades
-                var threshold = (int)Math.Ceiling(Students.Count * 0.20);
-
-                /*
-                If the threshold of all the average* grades*(-1 to return index) is less than the average *grade* we passed in then we will return grade A
-                E.g. 100 average grades
-                      0.20 threshold
-                      100 * 0.20 = 20
-                      threshold = 20
-                      Index to find = 19
-                if the average grade at index 19 is less than or equal to averageGrade then we return A
-                */
-
-                if (averageGrades[threshold -1] <= averageGrade)
-                {
-                    return 'A';
-                }
-                else if(averageGrades[(threshold*2) -1] <= averageGrade)
-                {
-                    return 'B';
-                }
-                else if (averageGrades[(threshold * 3) - 1] <= averageGrade)
-                {
-                    return 'C';
-                }
-                else if (averageGrades[(threshold * 4) - 1] <= averageGrade)
-                {
-                    return 'D';
-                }
+                throw new InvalidOperationException("You must have at least 5 students to do ranked grading.");
             }
-            else if (Students.Count <5)
+            
+            // Top 20 % - Round averageGrades
+            var threshold = (int)Math.Ceiling(Students.Count * 0.2);
+            
+            // Get the average grades for the students in a list order decending
+            var grades = Students.OrderByDescending(e => e.AverageGrade).Select(e => e.AverageGrade).ToList();
+
+            // Check if the averageGrade (passed into the GetLetterGrade method) is greater than the grade at the threshold index to determine the letter grade
+            if (averageGrade >= grades[threshold - 1])
             {
-                throw new InvalidOperationException("Ranked - grading requires a minimum of 5 students to work");
+                return 'A';
+            }
+            else if (averageGrade >= grades[(threshold * 2) - 1])
+            {
+                return 'B';
+            }
+            else if (averageGrade >= grades[(threshold * 3) - 1])
+            {
+                return 'C';
+            }
+            else if (averageGrade >= grades[(threshold * 4) - 1])
+            {
+                return 'D';
             }
 
             return 'F';
