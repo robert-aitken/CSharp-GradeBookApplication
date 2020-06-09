@@ -18,7 +18,7 @@ namespace GradeBook.GradeBooks
 
             if(students.Count > 5)
             {
-                if (averageGrade >= 90)
+                if (averageGrade >= 20)
                     return 'A';
                 else if (averageGrade >= 80)
                     return 'B';
@@ -33,8 +33,6 @@ namespace GradeBook.GradeBooks
             }
 
             return 'F';
-
-
         }
     }
 }
