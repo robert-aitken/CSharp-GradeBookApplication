@@ -26,8 +26,6 @@ namespace GradeBook.GradeBooks
                     return 'C';
                 else if (averageGrade >= 60)
                     return 'D';
-                else
-                    return 'F';
             }
             else if (students.Count <5)
             {
